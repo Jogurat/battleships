@@ -1,5 +1,6 @@
 const fields = document.querySelectorAll(".column");
 const rows = document.querySelectorAll(".row");
+const container = document.querySelector(".container");
 let firstClickedField, lastSelectedField;
 let wasMouseDown = false;
 
@@ -18,17 +19,26 @@ console.log(selectedShips[1]);
 
 // Select field as ship
 function selectAsShip(field) {
-  field.style.background = "#000";
-
+  //field.style.background = "#000";
+  field.classList.add("ship");
   field.isShip = true;
 }
 
 // Remove field as ship
 function unselectAsShip(field) {
+  let deletedShip = [];
   field.ship.forEach((coord) => {
-    fieldAt(fields, coord.row, coord.col).style.background = "#fff";
+    deletedShip.push({ row: coord.row, col: coord.col });
+    fieldAt(fields, coord.row, coord.col).classList.remove("ship");
     fieldAt(fields, coord.row, coord.col).isShip = false;
   });
+  let newSelectedShips = selectedShips[deletedShip.length - 1].ships.filter(
+    (ship) => JSON.stringify(ship) !== JSON.stringify(deletedShip)
+  );
+  selectedShips[deletedShip.length - 1].ships = newSelectedShips;
+  //console.log("delted: ");
+  //console.log(deletedShip);
+  //console.log(newSelectedShips);
 }
 
 function fieldAt(fields, i, j) {
@@ -51,45 +61,43 @@ function areAdjecent(field1, field2) {
   } else return false;
 }
 
+// areAdjecent but with corner support
+function cornerAdjecent(field1, field2) {
+  for (let i = -1; i < 2; i++) {
+    for (let j = -1; j < 2; j++) {
+      if (field1.row + i === field2.row && field1.col + j === field2.col) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+// Updates invalid fields
+function updateInvalidFields() {
+  // console.log("pozvan");
+  // console.log(fields[0]);
+  // console.log(selectedShips);
+  fields.forEach((field) => {
+    if (!fieldIsValid(field)) {
+      console.log(field);
+
+      field.classList.add("invalid");
+    } else {
+      field.classList.remove("invalid");
+    }
+  });
+}
+
 // Check if field is valid (no nearby ships)
 function fieldIsValid(field) {
   let flag = true;
-  // console.log(field.row);
-  // selectedShips.forEach((shipType) => {
-  //   if (!flag) return flag;
-  //   shipType.ships.forEach((ship) => {
-  //     if (
-  //       ship.row === field.row + 1 ||
-  //       ship.row === field.row - 1 ||
-  //       ship.col === field.col + 1 ||
-  //       ship.col === field.col - 1
-  //     ) {
-  //       flag = false;
-  //       return flag;
-  //     } else flag = true;
-  //   });
-  // });
-  // return flag;
   for (let i = 0; i < selectedShips.length; i++) {
     for (let j = 0; j < selectedShips[i].ships.length; j++) {
       let ship = selectedShips[i].ships[j];
-      // console.log("ship je: ");
-      // console.log(ship);
       for (let k = 0; k < ship.length; k++) {
-        // if (
-        //   ship[k].row === field.row + 1 ||
-        //   ship[k].row === field.row - 1 ||
-        //   ship[k].col === field.col + 1 ||
-        //   ship[k].col === field.col - 1
-        // ) {
-        //   console.log(ship[k]);
-        //   flag = false;
-        //   return false;
-        // } else {
-        //   //console.log(ship);
-        //   flag = true;
-        // }
-        if (areAdjecent(ship[k], field)) {
+        if (cornerAdjecent(ship[k], field)) {
+          //ovde je areAdjecent(ship[k], field)
           flag = false;
           return flag;
         } else {
@@ -102,17 +110,64 @@ function fieldIsValid(field) {
 }
 
 // Listeners
+
+window.addEventListener("mouseup", () => {
+  if (wasMouseDown) {
+    wasMouseDown = false;
+    firstClickedField = null;
+    //console.log(currShip);
+    // Push current ship to selectedShips
+    selectedShips[shipLength - 1].ships.push(currShip);
+    // console.log(selectedShips);
+    // console.log(currSelectedFields);
+    fields.forEach((field) => {
+      currSelectedFields.forEach((shipField) => {
+        if (field.row === shipField.row && field.col === shipField.col) {
+          field.ship = currSelectedFields;
+        }
+      });
+    });
+    currSelectedFields = [];
+    currShip = [];
+
+    totalShips++;
+  }
+  updateInvalidFields();
+});
+
 rows.forEach((row) => {
   row.addEventListener("mouseup", () => {
-    wasMouseDown = false;
+    // wasMouseDown = false;
+    // updateInvalidFields();
+    if (wasMouseDown) {
+      wasMouseDown = false;
+      firstClickedField = null;
+      //console.log(currShip);
+      // Push current ship to selectedShips
+      selectedShips[shipLength - 1].ships.push(currShip);
+      // console.log(selectedShips);
+      // console.log(currSelectedFields);
+      fields.forEach((field) => {
+        currSelectedFields.forEach((shipField) => {
+          if (field.row === shipField.row && field.col === shipField.col) {
+            field.ship = currSelectedFields;
+          }
+        });
+      });
+      currSelectedFields = [];
+      currShip = [];
+
+      totalShips++;
+    }
+    updateInvalidFields();
   });
 });
 
 fields.forEach((field, index) => {
   [field.row, field.col] = indexToRowCol(index);
   field.addEventListener("mousedown", () => {
-    wasMouseDown = true;
-    if (field.isShip && wasMouseDown) {
+    //wasMouseDown = true;
+    if (field.isShip) {
       unselectAsShip(field);
       return;
     }
@@ -135,7 +190,7 @@ fields.forEach((field, index) => {
       // Push current ship to selectedShips
       selectedShips[shipLength - 1].ships.push(currShip);
       // console.log(selectedShips);
-      console.log(currSelectedFields);
+      // console.log(currSelectedFields);
       fields.forEach((field) => {
         currSelectedFields.forEach((shipField) => {
           if (field.row === shipField.row && field.col === shipField.col) {
@@ -148,11 +203,15 @@ fields.forEach((field, index) => {
 
       totalShips++;
     }
+    updateInvalidFields();
   });
   field.addEventListener("mouseenter", () => {
-    if (!fieldIsValid(field)) {
-      field.classList.add("invalid");
-    }
+    // if (!fieldIsValid(field)) {
+    //   field.classList.add("invalid");
+    // }
+    // if (fieldIsValid(field)) {
+    //   field.classList.remove("invalid");
+    // }
     // if (field.isShip && wasMouseDown) {
     //   unselectAsShip(field);
     //   return;
