@@ -1,6 +1,6 @@
 const fields = document.querySelectorAll(".column");
 const rows = document.querySelectorAll(".row");
-let firstClickedField;
+let firstClickedField, lastSelectedField;
 let wasMouseDown = false;
 
 const selectedShips = {};
@@ -27,7 +27,17 @@ function indexToRowCol(index) {
   return [Math.floor(index / 10), index % 10];
 }
 
-console.log(fieldAt(fields, 0, 1));
+function areAdjecent(field1, field2) {
+  if (field1.row === field2.row) {
+    if (field1.col === field2.col + 1 || field1.col === field2.col - 1) {
+      return true;
+    }
+  } else if (field1.col === field2.col) {
+    if (field1.row === field2.row + 1 || field1.row === field2.row - 1) {
+      return true;
+    }
+  } else return false;
+}
 
 // Listeners
 rows.forEach((row) => {
@@ -46,6 +56,7 @@ fields.forEach((field, index) => {
     }
     selectAsShip(field);
     firstClickedField = field;
+    lastSelectedField = field;
   });
   field.addEventListener("mouseup", () => {
     if (wasMouseDown) {
@@ -59,12 +70,14 @@ fields.forEach((field, index) => {
       return;
     }
     // if (firstClickedField.classList.contains("row")) return;
-    if (
-      wasMouseDown &&
-      (firstClickedField.parentElement === field.parentElement ||
-        firstClickedField.col === field.col)
-    ) {
+    // if (
+    //   wasMouseDown &&
+    //   (firstClickedField.parentElement === field.parentElement ||
+    //     firstClickedField.col === field.col)
+    // )
+    if (wasMouseDown && areAdjecent(lastSelectedField, field)) {
       selectAsShip(field);
+      lastSelectedField = field;
     }
   });
 });
