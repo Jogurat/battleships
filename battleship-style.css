@@ -3,8 +3,11 @@
 }
 
 .container {
+  height: 80vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .column {
@@ -23,5 +26,9 @@
 
 .column:hover {
   transform: scale(1.1);
-  background-color: #f3f3f3;
+  background-color: #b9b7b7;
+}
+
+.column.invalid:hover {
+  background-color: red;
 }
