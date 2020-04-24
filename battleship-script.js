@@ -1,6 +1,9 @@
 const fields = document.querySelectorAll(".column");
 const rows = document.querySelectorAll(".row");
 const container = document.querySelector(".container");
+const availableShipsEl = document.getElementById("available-ships");
+const shipAmountsEls = document.querySelectorAll(".ships");
+console.log(shipAmountsEls);
 let firstClickedField, lastSelectedField;
 let wasMouseDown = false;
 
@@ -80,7 +83,7 @@ function updateInvalidFields() {
   // console.log(selectedShips);
   fields.forEach((field) => {
     if (!fieldIsValid(field)) {
-      console.log(field);
+      //console.log(field);
 
       field.classList.add("invalid");
     } else {
@@ -109,17 +112,23 @@ function fieldIsValid(field) {
   return flag;
 }
 
+// Update the current amount of ships on the board
+function updateAmounts() {
+  selectedShips.forEach((ship, index) => {
+    const div = shipAmountsEls[index];
+    div.innerHTML = `<p> Size ${ship.maxSize} ships: ${ship.ships.length}/${ship.maxAmount} </p>`;
+    //availableShipsEl.appendChild(div);
+  });
+}
+
 // Listeners
 
 window.addEventListener("mouseup", () => {
   if (wasMouseDown) {
     wasMouseDown = false;
     firstClickedField = null;
-    //console.log(currShip);
     // Push current ship to selectedShips
     selectedShips[shipLength - 1].ships.push(currShip);
-    // console.log(selectedShips);
-    // console.log(currSelectedFields);
     fields.forEach((field) => {
       currSelectedFields.forEach((shipField) => {
         if (field.row === shipField.row && field.col === shipField.col) {
@@ -133,6 +142,7 @@ window.addEventListener("mouseup", () => {
     totalShips++;
   }
   updateInvalidFields();
+  updateAmounts();
 });
 
 rows.forEach((row) => {
@@ -167,6 +177,7 @@ fields.forEach((field, index) => {
   [field.row, field.col] = indexToRowCol(index);
   field.addEventListener("mousedown", () => {
     //wasMouseDown = true;
+    console.log("TOTAL" + totalShips);
     if (field.isShip) {
       unselectAsShip(field);
       return;
@@ -176,21 +187,17 @@ fields.forEach((field, index) => {
       shipLength = 1;
       selectAsShip(field);
       currSelectedFields.push({ row: field.row, col: field.col });
+      firstClickedField = field;
+      lastSelectedField = field;
+      currShip.push({ row: field.row, col: field.col });
     }
-
-    firstClickedField = field;
-    lastSelectedField = field;
-    currShip.push({ row: field.row, col: field.col });
   });
   field.addEventListener("mouseup", () => {
     if (wasMouseDown) {
       wasMouseDown = false;
       firstClickedField = null;
-      //console.log(currShip);
       // Push current ship to selectedShips
       selectedShips[shipLength - 1].ships.push(currShip);
-      // console.log(selectedShips);
-      // console.log(currSelectedFields);
       fields.forEach((field) => {
         currSelectedFields.forEach((shipField) => {
           if (field.row === shipField.row && field.col === shipField.col) {
@@ -204,23 +211,17 @@ fields.forEach((field, index) => {
       totalShips++;
     }
     updateInvalidFields();
+    console.log(selectedShips[shipLength - 1].ships.length);
+    console.log(selectedShips[shipLength - 1].maxAmount);
   });
   field.addEventListener("mouseenter", () => {
-    // if (!fieldIsValid(field)) {
-    //   field.classList.add("invalid");
-    // }
-    // if (fieldIsValid(field)) {
-    //   field.classList.remove("invalid");
-    // }
-    // if (field.isShip && wasMouseDown) {
-    //   unselectAsShip(field);
-    //   return;
-    // }
     if (
       wasMouseDown &&
       areAdjecent(lastSelectedField, field) &&
       fieldIsValid(field) &&
       shipLength <= 3
+      // selectedShips[shipLength].ships.length <
+      //   selectedShips[shipLength].maxAmount
     ) {
       selectAsShip(field);
       shipLength++;
@@ -231,3 +232,5 @@ fields.forEach((field, index) => {
     }
   });
 });
+
+updateAmounts();
