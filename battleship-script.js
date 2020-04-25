@@ -214,14 +214,14 @@ function onMouseEnter(e) {
   let field = e.target;
   let straight;
   //console.log(lastSelectedField);
-  if (firstEntry) {
+  if (firstEntry && wasMouseDown) {
     //lastSelectedField = field;
     if (field.row === firstClickedField.row) {
       straight = "row";
     } else {
       straight = "col";
     }
-    console.log(straight);
+    // console.log(straight);
   }
   if (
     wasMouseDown &&
