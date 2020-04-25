@@ -6,10 +6,16 @@ const playButton = document.querySelector(".cta-btn");
 
 let tl = gsap.timeline();
 
+// tl.fromTo(
+//   shipImg,
+//   { x: "-100%" },
+//   { x: "0%", duration: 2, ease: Power1.easeInOut }
+// );
+
 tl.fromTo(
   shipImg,
-  { x: "-100%" },
-  { x: "0%", duration: 2, ease: Power1.easeInOut }
+  { height: "0%" },
+  { height: "100%", ease: Power2.easiInOut, duration: 1.5 }
 );
 
 tl.fromTo(card, { opacity: 0 }, { opacity: 1, duration: 1.5 });

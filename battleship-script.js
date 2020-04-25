@@ -121,9 +121,8 @@ function updateAmounts() {
   });
 }
 
-// Listeners
-
-window.addEventListener("mouseup", () => {
+// MouseUp event listner
+function onMouseUp() {
   if (wasMouseDown) {
     wasMouseDown = false;
     firstClickedField = null;
@@ -143,94 +142,57 @@ window.addEventListener("mouseup", () => {
   }
   updateInvalidFields();
   updateAmounts();
-});
+}
+
+function onMouseDown(e) {
+  let field = e.target;
+  console.log("TOTAL" + totalShips);
+  if (field.isShip) {
+    unselectAsShip(field);
+    return;
+  }
+  if (fieldIsValid(field)) {
+    wasMouseDown = true;
+    shipLength = 1;
+    selectAsShip(field);
+    currSelectedFields.push({ row: field.row, col: field.col });
+    firstClickedField = field;
+    lastSelectedField = field;
+    currShip.push({ row: field.row, col: field.col });
+  }
+}
+
+function onMouseEnter(e) {
+  let field = e.target;
+  if (
+    wasMouseDown &&
+    areAdjecent(lastSelectedField, field) &&
+    fieldIsValid(field) &&
+    shipLength <= 3
+    // selectedShips[shipLength].ships.length <
+    //   selectedShips[shipLength].maxAmount
+  ) {
+    selectAsShip(field);
+    shipLength++;
+    currShip.push({ row: field.row, col: field.col });
+    currSelectedFields.push({ row: field.row, col: field.col });
+
+    lastSelectedField = field;
+  }
+}
+
+// Listeners
+window.addEventListener("mouseup", onMouseUp);
 
 rows.forEach((row) => {
-  row.addEventListener("mouseup", () => {
-    // wasMouseDown = false;
-    // updateInvalidFields();
-    if (wasMouseDown) {
-      wasMouseDown = false;
-      firstClickedField = null;
-      //console.log(currShip);
-      // Push current ship to selectedShips
-      selectedShips[shipLength - 1].ships.push(currShip);
-      // console.log(selectedShips);
-      // console.log(currSelectedFields);
-      fields.forEach((field) => {
-        currSelectedFields.forEach((shipField) => {
-          if (field.row === shipField.row && field.col === shipField.col) {
-            field.ship = currSelectedFields;
-          }
-        });
-      });
-      currSelectedFields = [];
-      currShip = [];
-
-      totalShips++;
-    }
-    updateInvalidFields();
-  });
+  row.addEventListener("mouseup", onMouseUp);
 });
 
 fields.forEach((field, index) => {
   [field.row, field.col] = indexToRowCol(index);
-  field.addEventListener("mousedown", () => {
-    //wasMouseDown = true;
-    console.log("TOTAL" + totalShips);
-    if (field.isShip) {
-      unselectAsShip(field);
-      return;
-    }
-    if (fieldIsValid(field)) {
-      wasMouseDown = true;
-      shipLength = 1;
-      selectAsShip(field);
-      currSelectedFields.push({ row: field.row, col: field.col });
-      firstClickedField = field;
-      lastSelectedField = field;
-      currShip.push({ row: field.row, col: field.col });
-    }
-  });
-  field.addEventListener("mouseup", () => {
-    if (wasMouseDown) {
-      wasMouseDown = false;
-      firstClickedField = null;
-      // Push current ship to selectedShips
-      selectedShips[shipLength - 1].ships.push(currShip);
-      fields.forEach((field) => {
-        currSelectedFields.forEach((shipField) => {
-          if (field.row === shipField.row && field.col === shipField.col) {
-            field.ship = currSelectedFields;
-          }
-        });
-      });
-      currSelectedFields = [];
-      currShip = [];
-
-      totalShips++;
-    }
-    updateInvalidFields();
-    console.log(selectedShips[shipLength - 1].ships.length);
-    console.log(selectedShips[shipLength - 1].maxAmount);
-  });
-  field.addEventListener("mouseenter", () => {
-    if (
-      wasMouseDown &&
-      areAdjecent(lastSelectedField, field) &&
-      fieldIsValid(field) &&
-      shipLength <= 3
-      // selectedShips[shipLength].ships.length <
-      //   selectedShips[shipLength].maxAmount
-    ) {
-      selectAsShip(field);
-      shipLength++;
-      currShip.push({ row: field.row, col: field.col });
-      currSelectedFields.push({ row: field.row, col: field.col });
-
-      lastSelectedField = field;
-    }
-  });
+  field.addEventListener("mousedown", onMouseDown);
+  field.addEventListener("mouseup", onMouseUp);
+  field.addEventListener("mouseenter", onMouseEnter);
 });
 
 updateAmounts();
