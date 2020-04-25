@@ -3,6 +3,7 @@ const rows = document.querySelectorAll(".row");
 const container = document.querySelector(".container");
 const availableShipsEl = document.getElementById("available-ships");
 const shipAmountsEls = document.querySelectorAll(".ships");
+const saveButton = document.querySelector(".save-btn");
 console.log(shipAmountsEls);
 let firstClickedField, lastSelectedField;
 let wasMouseDown = false;
@@ -44,10 +45,12 @@ function unselectAsShip(field) {
   //console.log(newSelectedShips);
 }
 
+// For given matrix coords returns the field element
 function fieldAt(fields, i, j) {
   return fields[i * 10 + j];
 }
 
+// For the given index in array, returns the matrix row and column
 function indexToRowCol(index) {
   return [Math.floor(index / 10), index % 10];
 }
@@ -121,6 +124,36 @@ function updateAmounts() {
   });
 }
 
+// Reset board state
+function resetBoard() {
+  selectedShips.forEach((item) => {
+    item.ships = [];
+  });
+  fields.forEach((field) => {
+    if (field.isShip) {
+      unselectAsShip(field);
+    }
+  });
+  totalShips = 0;
+  updateAmounts();
+}
+
+// Save user's selected ships in localstorage
+function onSaveSelection() {
+  const toSave = JSON.stringify(selectedShips);
+  if (localStorage.getItem("user1-ships") === null) {
+    localStorage.setItem("user1-ships", toSave);
+  } else {
+    localStorage.setItem("user2-ships", toSave);
+  }
+  resetBoard();
+}
+
+//Reset localstorage onload
+function resetLocalStorage() {
+  localStorage.removeItem("user1-ships");
+  localStorage.removeItem("user2-ships");
+}
 // MouseUp event listner
 function onMouseUp() {
   if (wasMouseDown) {
@@ -144,6 +177,7 @@ function onMouseUp() {
   updateAmounts();
 }
 
+// MouseDown event listner
 function onMouseDown(e) {
   let field = e.target;
   console.log("TOTAL" + totalShips);
@@ -162,6 +196,7 @@ function onMouseDown(e) {
   }
 }
 
+// MouseEnter event listner
 function onMouseEnter(e) {
   let field = e.target;
   if (
@@ -195,4 +230,6 @@ fields.forEach((field, index) => {
   field.addEventListener("mouseenter", onMouseEnter);
 });
 
+saveButton.addEventListener("click", onSaveSelection);
 updateAmounts();
+resetLocalStorage();
