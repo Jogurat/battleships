@@ -4,9 +4,10 @@ const container = document.querySelector(".container");
 const availableShipsEl = document.getElementById("available-ships");
 const shipAmountsEls = document.querySelectorAll(".ships");
 const saveButton = document.querySelector(".save-btn");
-console.log(shipAmountsEls);
+//console.log(shipAmountsEls);
 let firstClickedField, lastSelectedField;
 let wasMouseDown = false;
+let firstEntry = true;
 
 let shipLength;
 let currShip = [];
@@ -19,7 +20,7 @@ const selectedShips = [
   { maxSize: 4, maxAmount: 1, ships: [] },
 ];
 
-console.log(selectedShips[1]);
+//console.log(selectedShips[1]);
 
 // Select field as ship
 function selectAsShip(field) {
@@ -78,6 +79,9 @@ function cornerAdjecent(field1, field2) {
   }
   return false;
 }
+
+// Check if ship is straight
+function checkStraight() {}
 
 // Updates invalid fields
 function updateInvalidFields() {
@@ -175,12 +179,15 @@ function onMouseUp() {
   }
   updateInvalidFields();
   updateAmounts();
+  firstEntry = false;
 }
 
 // MouseDown event listner
 function onMouseDown(e) {
   let field = e.target;
-  console.log("TOTAL" + totalShips);
+  firstEntry = true;
+
+  //console.log("TOTAL" + totalShips);
   if (field.isShip) {
     unselectAsShip(field);
     return;
@@ -192,6 +199,12 @@ function onMouseDown(e) {
     currSelectedFields.push({ row: field.row, col: field.col });
     firstClickedField = field;
     lastSelectedField = field;
+    //console.log(lastSelectedField.row);
+    firstClickedField.row = field.row;
+    lastSelectedField.row = field.row;
+
+    firstClickedField.col = field.col;
+    lastSelectedField.col = field.col;
     currShip.push({ row: field.row, col: field.col });
   }
 }
@@ -199,13 +212,24 @@ function onMouseDown(e) {
 // MouseEnter event listner
 function onMouseEnter(e) {
   let field = e.target;
+  let straight;
+  //console.log(lastSelectedField);
+  if (firstEntry) {
+    //lastSelectedField = field;
+    if (field.row === firstClickedField.row) {
+      straight = "row";
+    } else {
+      straight = "col";
+    }
+    console.log(straight);
+  }
   if (
     wasMouseDown &&
     areAdjecent(lastSelectedField, field) &&
     fieldIsValid(field) &&
-    shipLength <= 3
-    // selectedShips[shipLength].ships.length <
-    //   selectedShips[shipLength].maxAmount
+    shipLength <= 3 &&
+    firstClickedField[straight] === field[straight] &&
+    !field.isShip
   ) {
     selectAsShip(field);
     shipLength++;
@@ -231,5 +255,6 @@ fields.forEach((field, index) => {
 });
 
 saveButton.addEventListener("click", onSaveSelection);
+
 updateAmounts();
 resetLocalStorage();
