@@ -7,12 +7,17 @@
   font-family: "Poppins", sans-serif;
 }
 
+body {
+  overflow: hidden;
+}
+
 .container {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* transform: translate(-50%, -50%); */
 }
 
 .column {
@@ -54,7 +59,32 @@
   font-size: 16px;
 }
 
-/* Welcome page style  */
+.toast {
+  width: 400px;
+  height: 40px;
+  position: absolute;
+  bottom: -60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* transform: translate(-50%, -50%); */
+  text-align: center;
+  background-color: rgb(85, 79, 79);
+  color: white;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.toast.show {
+  transform: translateY(-60px);
+}
+
+.toast p {
+  margin: 0;
+}
+/* -------------Welcome page style-------------  */
 
 .welcome-container {
   display: flex;
@@ -114,8 +144,9 @@ input::placeholder {
   color: white;
 }
 
-input:focus {
+.card-content input:focus {
   outline: none;
+  border: 1px solid white;
 }
 
 .card-content button {

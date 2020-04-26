@@ -21,5 +21,5 @@ tl.fromTo(
 tl.fromTo(card, { opacity: 0 }, { opacity: 1, duration: 1.5 });
 
 playButton.addEventListener("click", () => {
-  window.location = "./battleship-game.html";
+  window.location = "./battleship-setup.html";
 });

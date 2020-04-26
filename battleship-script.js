@@ -4,6 +4,7 @@ const container = document.querySelector(".container");
 const availableShipsEl = document.getElementById("available-ships");
 const shipAmountsEls = document.querySelectorAll(".ships");
 const saveButton = document.querySelector(".save-btn");
+const toast = document.querySelector(".toast");
 //console.log(shipAmountsEls);
 let firstClickedField, lastSelectedField;
 let wasMouseDown = false;
@@ -137,13 +138,33 @@ function resetBoard() {
     if (field.isShip) {
       unselectAsShip(field);
     }
+    field.className = "column";
   });
   totalShips = 0;
   updateAmounts();
 }
 
+// Check whether the correct amount of ships was selected
+function correctAmountShips() {
+  let flag = true;
+  for (let i = 0; i < selectedShips.length; i++) {
+    if (selectedShips[i].ships.length !== selectedShips[i].maxAmount) {
+      flag = false;
+      return flag;
+    }
+  }
+  return flag;
+}
+
 // Save user's selected ships in localstorage
 function onSaveSelection() {
+  if (!correctAmountShips()) {
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2000);
+    return;
+  }
   const toSave = JSON.stringify(selectedShips);
   if (localStorage.getItem("user1-ships") === null) {
     localStorage.setItem("user1-ships", toSave);
