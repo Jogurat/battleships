@@ -200,6 +200,10 @@ input::placeholder {
   border: 1px solid white;
 }
 
+.card-content input:focus::placeholder {
+  color: transparent;
+}
+
 .card-container button {
   cursor: pointer;
   width: 80%;
