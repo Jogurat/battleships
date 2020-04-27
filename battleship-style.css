@@ -125,6 +125,7 @@ body {
   background-color: black;
   color: white;
   border-radius: 5px;
+  align-items: center;
 }
 
 .avatar-container.page2 {
@@ -407,6 +408,7 @@ input::placeholder {
 }
 
 .toast.page1 {
+  bottom: -65px;
   padding: 7px 2px;
 }
 
