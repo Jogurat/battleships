@@ -36,7 +36,7 @@ const image2 = {
   Hat: hatImg2,
 };
 
-const NUM_BODY_PARTS = 2;
+const NUM_BODY_PARTS = 3;
 
 let currBodyParts1 = { Mouth: 1, Eyes: 1, Shirt: 1, Hat: 1 };
 let currBodyParts2 = { Mouth: 2, Eyes: 2, Shirt: 2, Hat: 2 };

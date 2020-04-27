@@ -20,6 +20,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url(./assets/test-bg3.png);
   /* transform: translate(-50%, -50%); */
 }
 
@@ -56,6 +57,8 @@ body {
   font-size: 15px;
   font-weight: bold;
   padding: 10px;
+  background-color: #7f5af0;
+  color: #fffffe;
 }
 
 .ships {
@@ -90,17 +93,22 @@ body {
 }
 
 .current-player {
-  width: 200px;
+  /* width: 200px; */
+  background-color: #fffffe;
   height: 200px;
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
   align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
   /* margin-top: 30px; */
 }
 
 .current-player span {
   font-size: 50px;
+  margin-right: 10px;
 }
 
 .board-container {
@@ -113,7 +121,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: grey;
+  background-color: #fffffe;
   padding: 20px 20px;
   border-radius: 5px;
 }
@@ -122,7 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 10px 10px;
-  background-color: black;
+  background-color: #72757e;
   color: white;
   border-radius: 5px;
   align-items: center;
