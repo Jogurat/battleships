@@ -5,10 +5,12 @@
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
+  -webkit-user-drag: none;
 }
 
 body {
   overflow: hidden;
+  user-select: none;
 }
 
 .container {
@@ -97,7 +99,7 @@ body {
 .card-container {
   /* height: 755px;   */
   height: 600px;
-  width: 500px;
+  width: 800px;
   background: linear-gradient(
     144.33deg,
     rgba(90, 157, 179, 0.5) 2.07%,
@@ -122,22 +124,24 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
 .card-content input {
-  width: 60%;
-  height: 5%;
-  padding: 20px;
-  margin-bottom: 50px;
+  width: 90%;
+  /* height: 2%; */
+  padding: 5px 5px;
+
   border-radius: 5px;
   font-size: 20px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   background-color: #6a9a99;
   color: white;
   opacity: 0.9;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 input::placeholder {
@@ -149,7 +153,7 @@ input::placeholder {
   border: 1px solid white;
 }
 
-.card-content button {
+.card-container button {
   cursor: pointer;
   width: 80%;
   height: 10%;
@@ -165,7 +169,7 @@ input::placeholder {
   margin-top: 50px;
 }
 
-.card-content button:hover {
+.card-container button:hover {
   transform: scale(1.02);
 }
 
@@ -194,4 +198,156 @@ input::placeholder {
   height: 100%;
   width: 100%;
   object-fit: cover;
+}
+
+.player1,
+.player2 {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.avatar-container {
+  position: relative;
+  min-width: 200px;
+  min-height: 200px;
+  object-fit: contain;
+  border: 1px solid white;
+  margin: 0 10px;
+}
+
+.avatar-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-container {
+  /* animation: shake 0.5s; */
+  animation-iteration-count: infinite;
+}
+
+.hat,
+.body-head,
+.eyes,
+.mouth,
+.shirt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.mouth {
+  z-index: 4;
+}
+
+.eyes {
+  z-index: 3;
+}
+
+.hat {
+  z-index: 4;
+}
+
+.body-head {
+  z-index: 2;
+}
+
+/* Buttons for changing avatars */
+.avatar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+
+  border-radius: 50%;
+  /* background-color: white; */
+  min-width: 32px;
+  min-height: 32px;
+  cursor: pointer;
+  color: white;
+}
+
+.avatar-btn:hover {
+  color: black;
+}
+
+.Hat-up-btn {
+  top: 90px;
+  right: 0px;
+}
+
+.Hat-down-btn {
+  top: 90px;
+  left: 0px;
+}
+
+.Eyes-up-btn {
+  top: 130px;
+  right: 0px;
+}
+
+.Eyes-down-btn {
+  top: 130px;
+  left: 0px;
+}
+
+.Mouth-up-btn {
+  top: 170px;
+  right: 0px;
+}
+
+.Mouth-down-btn {
+  top: 170px;
+  left: 0px;
+}
+
+.Shirt-up-btn {
+  top: 210px;
+  right: 0px;
+}
+
+.Shirt-down-btn {
+  top: 210px;
+  left: 0px;
+}
+@keyframes shake {
+  0% {
+    transform: translate(0.5px, 0.5px);
+  }
+  10% {
+    transform: translate(-0.5px, -1px);
+  }
+  20% {
+    transform: translate(-1.5px, 0px);
+  }
+  30% {
+    transform: translate(1.5px, 1px);
+  }
+  40% {
+    transform: translate(0.5px, -0.5px);
+  }
+  50% {
+    transform: translate(-0.5px, 1px);
+  }
+  60% {
+    transform: translate(-1.5px, 0.5px);
+  }
+  70% {
+    transform: translate(1.5px, 0.5px);
+  }
+  80% {
+    transform: translate(-0.5px, -0.5px);
+  }
+  90% {
+    transform: translate(0.5px, 1px);
+  }
+  100% {
+    transform: translate(0.5px, -1px);
+  }
 }
