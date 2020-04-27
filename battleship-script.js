@@ -6,6 +6,16 @@ const shipAmountsEls = document.querySelectorAll(".ships");
 const saveButton = document.querySelector(".save-btn");
 const toast = document.querySelector(".toast");
 //console.log(shipAmountsEls);
+
+// Avatar and player info
+const currentPlayer = document.querySelector(".current-player");
+const avatarContainer = currentPlayer.querySelector(".player-avatar");
+const nameContainer = currentPlayer.querySelector("span");
+const user1 = JSON.parse(localStorage.getItem("user1"));
+let avatar1 = JSON.parse(user1.avatar);
+const user2 = JSON.parse(localStorage.getItem("user2"));
+let avatar2 = JSON.parse(user2.avatar);
+
 let firstClickedField, lastSelectedField;
 let wasMouseDown = false;
 let firstEntry = true;
@@ -156,6 +166,9 @@ function correctAmountShips() {
   return flag;
 }
 
+let firstTurn = true;
+nameContainer.innerText = user1.username;
+avatarContainer.innerHTML = avatar1;
 // Save user's selected ships in localstorage
 function onSaveSelection() {
   if (!correctAmountShips()) {
@@ -165,12 +178,18 @@ function onSaveSelection() {
     }, 2000);
     return;
   }
-  const toSave = JSON.stringify(selectedShips);
-  if (localStorage.getItem("user1-ships") === null) {
-    localStorage.setItem("user1-ships", toSave);
+  // const toSave = JSON.stringify(selectedShips);
+  if (firstTurn) {
+    user1.selectedShips = selectedShips;
+    localStorage.setItem("user1", JSON.stringify(user1));
+    nameContainer.innerText = user2.username;
+    avatarContainer.innerHTML = avatar2;
   } else {
-    localStorage.setItem("user2-ships", toSave);
+    user2.selectedShips = selectedShips;
+    localStorage.setItem("user2", JSON.stringify(user2));
+    // Go to play page
   }
+
   resetBoard();
 }
 
@@ -279,3 +298,5 @@ saveButton.addEventListener("click", onSaveSelection);
 
 updateAmounts();
 resetLocalStorage();
+
+//onload

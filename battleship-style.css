@@ -11,6 +11,7 @@
 body {
   overflow: hidden;
   user-select: none;
+  /* position: relative; */
 }
 
 .container {
@@ -24,8 +25,8 @@ body {
 
 .column {
   cursor: pointer;
-  height: 50px;
-  width: 50px;
+  height: 45px;
+  width: 45px;
   border: 1px solid black;
   margin: 3px 3px;
 }
@@ -63,7 +64,7 @@ body {
 
 .toast {
   width: 400px;
-  height: 40px;
+  min-height: 40px;
   position: absolute;
   bottom: -60px;
 
@@ -77,6 +78,7 @@ body {
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
   transition: transform 0.3s ease-in-out;
+  z-index: 5;
 }
 
 .toast.show {
@@ -86,6 +88,48 @@ body {
 .toast p {
   margin: 0;
 }
+
+.current-player {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  /* margin-top: 30px; */
+}
+
+.current-player span {
+  font-size: 50px;
+}
+
+.board-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-controls-container {
+  width: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: grey;
+  padding: 20px 20px;
+  border-radius: 5px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+}
+
+.avatar-container.page2 {
+}
+
 /* -------------Welcome page style-------------  */
 
 .welcome-container {
@@ -93,7 +137,9 @@ body {
   height: 100vh;
   align-items: center;
   justify-content: center;
-  overflow: none;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
 }
 
 .card-container {
@@ -357,5 +403,15 @@ input::placeholder {
   }
   100% {
     transform: translate(0.5px, -1px);
+  }
+}
+
+.toast.page1 {
+  padding: 7px 2px;
+}
+
+@media (max-width: 700px) {
+  .card-content {
+    flex-direction: column;
   }
 }
