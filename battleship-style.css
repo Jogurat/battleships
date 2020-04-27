@@ -271,12 +271,20 @@ input::placeholder {
   min-height: 32px;
   cursor: pointer;
   color: white;
+  transition: transform 0.1s ease-in;
 }
 
 .avatar-btn:hover {
   color: black;
 }
 
+.slide-right:hover {
+  transform: translateX(2px);
+}
+
+.slide-left:hover {
+  transform: translateX(-2px);
+}
 .Hat-up-btn {
   top: 90px;
   right: 0px;
