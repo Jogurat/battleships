@@ -184,10 +184,13 @@ function onSaveSelection() {
     localStorage.setItem("user1", JSON.stringify(user1));
     nameContainer.innerText = user2.username;
     avatarContainer.innerHTML = avatar2;
+    firstTurn = false;
   } else {
+    console.log("u else sam");
     user2.selectedShips = selectedShips;
     localStorage.setItem("user2", JSON.stringify(user2));
     // Go to play page
+    window.location = "./battleship-game.html";
   }
 
   resetBoard();
