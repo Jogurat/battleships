@@ -438,3 +438,23 @@ input::placeholder {
   align-items: center;
   justify-content: space-evenly;
 }
+
+.column.p3 {
+  cursor: url(./assets/rsz_1crosshairs.png) 15 5, pointer;
+}
+
+.column.p3.ship {
+  background-color: indianred;
+}
+
+.column.p3.hidden.ship {
+  background-color: white;
+}
+
+.column.p3.hidden.ship:hover {
+  background-color: #b9b7b7;
+}
+
+.column.p3.ship.whole {
+  background-color: yellow;
+}
