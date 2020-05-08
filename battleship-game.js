@@ -58,20 +58,20 @@ initFields();
 let player1_turn = true;
 
 function toggleTurn() {
-  if (player1_turn) {
+  if (!player1_turn) {
     player1_fields.forEach((field) => {
       field.classList.remove("hidden");
     });
 
     player2_fields.forEach((field) => {
-      field.classList.toggle("hidden");
+      field.classList.add("hidden");
     });
   } else {
     player2_fields.forEach((field) => {
       field.classList.remove("hidden");
     });
     player1_fields.forEach((field) => {
-      field.classList.toggle("hidden");
+      field.classList.add("hidden");
     });
   }
   player1_turn = !player1_turn;
@@ -82,8 +82,8 @@ function markShipHit(fields, ships, row, col) {
     sizes.ships.forEach((ship) => {
       let wasHit = false;
       ship.forEach((coord) => {
+        console.log(row, col);
         if (coord.row === row && coord.col === col) {
-          //   console.log("hi from markasship");
           coord.isHit = true;
           wasHit = true;
         }
@@ -91,9 +91,8 @@ function markShipHit(fields, ships, row, col) {
       if (wasHit) {
         let wholeShipHit = true;
         for (let coord of ship) {
-          //   console.log("coord", coord);
           if (!coord.isHit) {
-            // console.log("hi");
+            console.log("lmao");
             wholeShipHit = false;
             break;
           }
@@ -119,25 +118,25 @@ function checkIsShip(field) {
 }
 
 function onMouseClick(e) {
-  //   console.log(e.target);
-  //   console.log(e.target.index);
   let [row, col] = indexToRowCol(e.target.index);
   if (checkIsShip(e.target)) {
     // Ship is hit
     e.target.classList.remove("hidden");
-
+    e.target.classList.add("hit");
     let ships;
     let fields;
+    let test;
     if (player1_turn) {
-      ships = player1_ships;
-      fields = player1_fields;
-    } else {
       ships = player2_ships;
       fields = player2_fields;
+    } else {
+      ships = player1_ships;
+      fields = player1_fields;
     }
-    // console.log(ships);
-    // console.log(row, col);
+    console.log(test);
     markShipHit(fields, ships, row, col);
+  } else {
+    toggleTurn();
   }
 }
 
@@ -148,8 +147,16 @@ player1_fields.forEach((field, index) => {
   field.addEventListener("click", onMouseClick);
 });
 
-player2_fields.forEach((field) => {
+player2_fields.forEach((field, index) => {
+  field.index = index;
   field.addEventListener("click", onMouseClick);
 });
-toggleTurn();
-toggleTurn();
+
+//init state
+player1_fields.forEach((field) => {
+  field.classList.remove("hidden");
+});
+
+player2_fields.forEach((field) => {
+  field.classList.add("hidden");
+});

@@ -153,7 +153,7 @@ body {
 
 .card-container {
   /* height: 755px;   */
-  height: 600px;
+  height: 700px;
   width: 800px;
   background: linear-gradient(
     144.33deg,
@@ -225,7 +225,8 @@ input::placeholder {
   background-color: #328caa;
   color: white;
   opacity: 0.9;
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .card-container button:hover {
@@ -383,6 +384,13 @@ input::placeholder {
   top: 210px;
   left: 0px;
 }
+
+.card-container .random-btn {
+  font-size: 20px;
+  padding: 10px;
+  outline: none;
+}
+
 @keyframes shake {
   0% {
     transform: translate(0.5px, 0.5px);
@@ -455,6 +463,9 @@ input::placeholder {
   background-color: #b9b7b7;
 }
 
+.column.p3.ship.hit {
+  background-color: red;
+}
 .column.p3.ship.whole {
   background-color: yellow;
 }

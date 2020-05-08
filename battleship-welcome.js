@@ -14,6 +14,9 @@ const shirtImg1 = player1.querySelector("#shirt-img");
 const eyesImg1 = player1.querySelector("#eyes-img");
 const hatImg1 = player1.querySelector("#hat-img");
 const avatar1 = player1.querySelector(".avatar-container");
+const randomBtn1 = player1.querySelector("#player1-random-btn");
+const player1Images = player1.querySelectorAll("img");
+
 const image1 = {
   Mouth: mouthImg1,
   Shirt: shirtImg1,
@@ -28,6 +31,8 @@ const shirtImg2 = player2.querySelector("#shirt-img");
 const eyesImg2 = player2.querySelector("#eyes-img");
 const hatImg2 = player2.querySelector("#hat-img");
 const avatar2 = player2.querySelector(".avatar-container");
+const randomBtn2 = player2.querySelector("#player2-random-btn");
+const player2Images = player2.querySelectorAll("img");
 
 const image2 = {
   Mouth: mouthImg2,
@@ -67,14 +72,17 @@ function serializeAvatar(avatar) {
   let domEl = avatar.cloneNode(true);
   domEl.classList.add("page2");
   JSON.stringify(domEl);
-  //console.log(domEl);
-  // localStorage.setItem("user1", domEl);
 }
 
 serializeAvatar(avatar1);
 
+function getRandomNumInRange(min, max) {
+  min = Math.ceil(min);
+  max = Math.ceil(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 avatarButtons1.forEach((btn) => {
-  //console.log(btn.classList[0].split("-")[0]);
   btn.addEventListener("click", () => {
     let part = btn.classList[0].split("-")[0];
     let upDown = btn.classList[0].split("-")[1];
@@ -94,21 +102,6 @@ avatarButtons2.forEach((btn) => {
 
 const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
 
-let tl = gsap.timeline();
-
-// tl.fromTo(
-//   shipImg,
-//   { x: "-100%" },
-//   { x: "0%", duration: 2, ease: Power1.easeInOut }
-// );
-
-// tl.fromTo(
-//   shipImg,
-//   { height: "0%" },
-//   { height: "100%", ease: Power2.easiInOut, duration: 1.5 }
-// );
-
-// tl.fromTo(card, { opacity: 0 }, { opacity: 1, duration: 1.5 });
 let user1 = {},
   user2 = {};
 playButton.addEventListener("click", () => {
@@ -134,4 +127,24 @@ playButton.addEventListener("click", () => {
       toast.classList.remove("show");
     }, 3000);
   }
+});
+
+randomBtn1.addEventListener("click", () => {
+  player1Images.forEach((img) => {
+    let src = img.src;
+    if (src.includes("Body")) return;
+    let random = getRandomNumInRange(1, NUM_BODY_PARTS);
+    let str = random + ".png";
+    img.src = img.src.replace(/.\.png/, str);
+  });
+});
+
+randomBtn2.addEventListener("click", () => {
+  player2Images.forEach((img) => {
+    let src = img.src;
+    if (src.includes("Body")) return;
+    let random = getRandomNumInRange(1, NUM_BODY_PARTS);
+    let str = random + ".png";
+    img.src = img.src.replace(/.\.png/, str);
+  });
 });
