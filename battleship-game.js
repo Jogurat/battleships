@@ -11,8 +11,8 @@ const player2_name = player2.querySelector("span");
 
 const player1_fields = player1.querySelectorAll(".column");
 const player2_fields = player2.querySelectorAll(".column");
-const player1Curtain = player1.querySelector(".board-container::before");
-const player2Curtain = player2.querySelector(".board-container::before");
+const player1_arrow = player1.querySelector(".arrow");
+const player2_arrow = player2.querySelector(".arrow");
 
 const modal = document.querySelector(".modal-container");
 const modal_avatar = modal.querySelector(".player-avatar");
@@ -47,6 +47,9 @@ function indexToRowCol(index) {
 
 function initFields() {
   // Initiliaze fields for player1
+  player1_arrow.classList.add("hidden");
+  //player2_arrow.classList.add("hidden");
+
   player1_ships.forEach((shipSize) => {
     shipSize.ships.forEach((ship) => {
       ship.forEach((coord) => {
@@ -69,7 +72,8 @@ let player1_turn = true;
 
 function toggleTurn() {
   if (!player1_turn) {
-    //player2Curtain.classList.add("hidden");
+    player1_arrow.classList.add("hidden");
+    player2_arrow.classList.remove("hidden");
 
     player1_fields.forEach((field) => {
       field.classList.remove("hidden");
@@ -80,6 +84,8 @@ function toggleTurn() {
     });
   } else {
     //player1Curtain.classList.add("hidden");
+    player2_arrow.classList.add("hidden");
+    player1_arrow.classList.remove("hidden");
 
     player2_fields.forEach((field) => {
       field.classList.remove("hidden");
@@ -186,6 +192,7 @@ player2_fields.forEach((field, index) => {
 
 restartBtn.addEventListener("click", () => {
   window.location = "/battleship-welcome.html";
+  localStorage.clear();
 });
 
 //init state
