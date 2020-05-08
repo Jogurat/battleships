@@ -229,6 +229,11 @@ input::placeholder {
   margin-bottom: 20px;
 }
 
+.card-container button:active {
+  transform: scale(1.02);
+  background-color: #64afc8;
+}
+
 .card-container button:hover {
   transform: scale(1.02);
 }
