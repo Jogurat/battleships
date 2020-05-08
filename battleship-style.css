@@ -454,6 +454,7 @@ input::placeholder {
   align-items: center;
   justify-content: space-evenly;
   height: 100vh;
+  /* background: url(./assets/test-bg2.png); */
 }
 
 .column.p3 {

@@ -191,7 +191,7 @@ player2_fields.forEach((field, index) => {
 });
 
 restartBtn.addEventListener("click", () => {
-  window.location = "/battleship-welcome.html";
+  window.location = "./battleship-welcome.html";
   localStorage.clear();
 });
 
