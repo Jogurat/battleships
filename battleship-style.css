@@ -446,10 +446,12 @@ input::placeholder {
 /* GAME PAGE STYLES */
 
 .p3-container {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+  height: 100vh;
 }
 
 .column.p3 {
@@ -469,8 +471,61 @@ input::placeholder {
 }
 
 .column.p3.ship.hit {
-  background-color: red;
+  background-color: green;
 }
+
 .column.p3.ship.whole {
   background-color: yellow;
 }
+.column.p3.missed {
+  background-color: red;
+}
+
+.column.p3:not(.hidden) {
+  pointer-events: none;
+}
+
+.modal-container {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+
+.modal-container.hidden {
+  display: none;
+}
+
+.card-container-p3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  background-color: white;
+  /* width: 50%; */
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+}
+
+/* .board-container::before {
+  content: "";
+  position: absolute;
+  width: 535px;
+  height: 535px;
+  /* background-color: black; 
+  z-index: 10;
+  pointer-events: visible;
+  display: block;
+}
+
+.board-container::before.hidden {
+  display: none;
+} */

@@ -11,6 +11,13 @@ const player2_name = player2.querySelector("span");
 
 const player1_fields = player1.querySelectorAll(".column");
 const player2_fields = player2.querySelectorAll(".column");
+const player1Curtain = player1.querySelector(".board-container::before");
+const player2Curtain = player2.querySelector(".board-container::before");
+
+const modal = document.querySelector(".modal-container");
+const modal_avatar = modal.querySelector(".player-avatar");
+const modal_name = modal.querySelector("span");
+const restartBtn = modal.querySelector("button");
 
 const user1 = JSON.parse(localStorage.getItem("user1"));
 const user2 = JSON.parse(localStorage.getItem("user2"));
@@ -25,6 +32,9 @@ player2_name.innerText = user2.username;
 
 player1_avatar.innerHTML = avatar1;
 player2_avatar.innerHTML = avatar2;
+
+let player1_hits = 0;
+let player2_hits = 0;
 
 function fieldAt(fields, i, j) {
   return fields[i * 10 + j];
@@ -59,6 +69,8 @@ let player1_turn = true;
 
 function toggleTurn() {
   if (!player1_turn) {
+    //player2Curtain.classList.add("hidden");
+
     player1_fields.forEach((field) => {
       field.classList.remove("hidden");
     });
@@ -67,6 +79,8 @@ function toggleTurn() {
       field.classList.add("hidden");
     });
   } else {
+    //player1Curtain.classList.add("hidden");
+
     player2_fields.forEach((field) => {
       field.classList.remove("hidden");
     });
@@ -76,6 +90,8 @@ function toggleTurn() {
   }
   player1_turn = !player1_turn;
 }
+
+// toggleTurn();
 
 function markShipHit(fields, ships, row, col) {
   ships.forEach((sizes) => {
@@ -126,16 +142,32 @@ function onMouseClick(e) {
     let ships;
     let fields;
     let test;
+
     if (player1_turn) {
       ships = player2_ships;
       fields = player2_fields;
+      player1_hits++;
     } else {
       ships = player1_ships;
       fields = player1_fields;
+      player2_hits++;
     }
-    console.log(test);
+    // TODO change back condition to 20 instead of 1
+    if (player1_hits === 20) {
+      // show modal for player 1 as winner
+      modal_avatar.innerHTML = avatar1;
+      modal_name.innerText = user1.username;
+      modal.classList.remove("hidden");
+    } else if (player2_hits === 20) {
+      // show modal for player 2 as winner
+      modal_avatar.innerHTML = avatar2;
+      modal_name.innerText = user2.username;
+      modal.classList.remove("hidden");
+    }
+
     markShipHit(fields, ships, row, col);
   } else {
+    e.target.classList.add("missed");
     toggleTurn();
   }
 }
@@ -150,6 +182,10 @@ player1_fields.forEach((field, index) => {
 player2_fields.forEach((field, index) => {
   field.index = index;
   field.addEventListener("click", onMouseClick);
+});
+
+restartBtn.addEventListener("click", () => {
+  window.location = "/battleship-welcome.html";
 });
 
 //init state
