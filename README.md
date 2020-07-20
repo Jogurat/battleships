@@ -34,6 +34,7 @@ Pressing "Save Selection" will take you to the same selection screen, but for th
 
 On the game page, you will be prompted to play the game (aha!).
 
+The orange-ish pink tiles represent your ship tiles.
 You play by clicking on the tile you wish to sink your enemy on.
 ![game1](assets/screenshots/game1.png)
 
@@ -42,3 +43,11 @@ When you hit a ship, that tile will turn green, and you can target another tile,
 
 When you sink the entire ship, all the tiles of that ship will turn yellow.
 ![game3](assets/screenshots/game3.png)
+
+When you miss a tile, it will turn red, and the other player's turn will commence.
+![game4](assets/screenshots/game4.png)
+
+Once a player hits all the opposing player's ship tiles, that player is deemed the winner!
+![game5](assets/screenshots/game5.png)
+
+Here, you can restart the game!
