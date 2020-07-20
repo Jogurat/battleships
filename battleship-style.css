@@ -457,6 +457,10 @@ input::placeholder {
   /* background: url(./assets/test-bg2.png); */
 }
 
+.player-container {
+  background-color: white;
+}
+
 .column.p3 {
   cursor: url(./assets/rsz_1crosshairs.png) 15 5, pointer;
 }
