@@ -22,10 +22,9 @@ Some cute avatars for your satisfaction :)
 
 On the setup page, you are prompted to place your ships. You do this by clicking and dragging your mouse.
 You must select the correct amount of ships to go onto the next stage (the game phase).
-
 ![setup](assets/screenshots/setup.png)
-The red boxes signalize that you cannot place a ship there.
 
+The red boxes signalize that you cannot place a ship there.
 ![setup2](assets/screenshots/setup2.png)
 Clicking on an already placed ship will remove it.
 
