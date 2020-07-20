@@ -1,6 +1,10 @@
 # Battleships
 
-This is a small project for a University class - Web Design
+## [Live demo](https://jogurat-battleships.netlify.app/)
+
+This is a small, vanilla HTML, JS and CSS project for a University class - Web Design.
+
+You can see the live demo [here](https://jogurat-battleships.netlify.app/).
 
 It is a couch co-op multiplayer game of Battleships - you have to sink the other players ships.
 
