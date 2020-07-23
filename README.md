@@ -15,6 +15,10 @@ On the first page, you are prompted to select your usernames, as well as your av
 The avatar selection is inspired by skribbl.io, all the assets were drawn by me, using an old Wacom tablet. You can change the hat, eyes, mouth and shirt of the avatar. Also, there's a "Randomize" option, which will, you guessed it, randomize your avatar.
 ![index page](assets/screenshots/index.png)
 
+The randomization:
+
+![random](assets/screenshots/random.gif)
+
 Some cute avatars for your satisfaction :)
 
 ![avatar1](assets/screenshots/avatar1.png)
