@@ -59,3 +59,5 @@ Once a player hits all the opposing player's ship tiles, that player is deemed t
 ![game5](assets/screenshots/game5.png)
 
 Here, you can restart the game!
+
+### [Live demo](https://jogurat-battleships.netlify.app/)
